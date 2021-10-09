@@ -34,7 +34,7 @@ int main(int argc, const char *argv[]){
 	gdImage *img = gdImageCreateTrueColor(WIDTH, HEIGHT);
 	if(!img)
 		return 1;
-	setBackground(img, 4);
+	setBackground(img, 0);
 	initField();
 	initAtoms(paletteGetCount(pal));
 	for(int i = 0; i < ITERS; i++){
@@ -80,7 +80,7 @@ void initField(){
 		for(int j = 0; j < HS; j++){
 			int sx = i * GRID_SIZE,
 				sy = j * GRID_SIZE;
-			Vec2 v = VEC_CREATE(exp((sx - sy) * 0.0008f), sin((sy + sx) * 0.0021f));
+			Vec2 v = VEC_CREATE(cos((sx - sy * 2) * 0.0009f), sin((sy + sx) * 0.0021f));
 			setVec(VEC_CREATE(sx, sy), v, 1);
 		}
 	}

@@ -6,10 +6,10 @@ obj := colour.o vec.o
 all: amber
 
 
-amber: amber.c $(obj)
+amber: amber.c config.h $(obj)
 	gcc amber.c $(obj) $(libs) $(flags) -o $@
 
-%.o: %.c %.h
+%.o: %.c %.h config.h
 	gcc -c $< $(flags) $(libs) -o $@
 clean:
 	rm amber $(obj)
