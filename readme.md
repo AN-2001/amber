@@ -7,3 +7,9 @@ A program for generating "painting" like art
 
 ![png!](https://github.com/AN-2001/amber/blob/master/docs/p2.png)
 
+![png!](https://github.com/AN-2001/amber/blob/master/docs/p4.png)
+
+![gif!](https://github.com/AN-2001/amber/blob/master/docs/out.gif)
+
+
+
