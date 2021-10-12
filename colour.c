@@ -1,9 +1,10 @@
 #include "colour.h"
 #include <gd.h>
 #include "config.h"
+#define DRAW_CIRCLE_AT(img, x, y) (gdImageFilledEllipse(img, x, y, GRID_SIZE, GRID_SIZE, currentColor)) 
 #define DRAW_RECT_AT(img, x, y) (gdImageFilledRectangle(img, x, y, x + GRID_SIZE, y + GRID_SIZE, currentColor)) 
 #define BUFFER_SIZE 512
-#define MAX_P_COUNT 32	
+#define MAX_P_COUNT 64	
 struct palette_t{
 	Color *p;
 	unsigned count;
@@ -21,13 +22,18 @@ void setBackground(gdImage *img, Cindex index){
 }
 
 void atomsDraw(Atom *atoms, size_t count, gdImage *img){
+	if(!currPalette)
+		return;
 	for(int i = 0; i < count; i++){
 		Atom atom = atoms[i];
 		if(atom.cindex >= currPalette->count)
 			return;
-
 		currentColor = currPalette->p[atom.cindex];
+#ifndef CIRCLE_ATOMS
 		DRAW_RECT_AT(img, atom.pos.x, atom.pos.y);
+#else
+		DRAW_CIRCLE_AT(img, atom.pos.x, atom.pos.y);
+#endif
 	}
 }
 

@@ -7,6 +7,7 @@
 #include "vec.h"
 #include "colour.h"
 #include "config.h"
+#define GO_TO_LINE_START "[0`"
 // TODO: get rid of globals you idiot.......
 typedef Vec2 (*Curve)(double t);
 Vec2 field[WS * HS];
@@ -15,6 +16,7 @@ void performIter();
 void initField();
 void initAtoms(int p);
 void setVec(Vec2 v, Vec2 u, int norm);
+void printProgress(int curr, int total);
 
 
 int main(int argc, const char *argv[]){
@@ -23,7 +25,7 @@ int main(int argc, const char *argv[]){
 		return 1;
 	}
 
-	const char *path = argc >= 3 ? argv[2] : "./out.png";
+	const char *path = argc >= 3 ? argv[2] : "./out";
 	const char *palettePath = argc >= 2 ? argv[1] : "default.csv";
 	Palette pal = paletteLoad(palettePath);	
 	if(!pal)
@@ -40,8 +42,23 @@ int main(int argc, const char *argv[]){
 	for(int i = 0; i < ITERS; i++){
 		performIter();
 		atomsDraw(atoms, ATOM_COUNT, img);
+#ifdef SHOW_ALL_ITERS
+		char out[64] = {0};
+		sprintf(out, "%s%d.png", path, i);
+		gdImageFile(img, out);
+#endif
+		if(i % PRINT_PERIOD == 0)
+			printProgress(i, ITERS);
 	}
-	gdImageFile(img, path);
+
+	printProgress(ITERS, ITERS);
+
+#ifndef SHOW_ALL_ITERS
+	char out[64] = {0};
+	sprintf(out, "%s.png", path);
+	gdImageFile(img, out);
+#endif
+
 	gdImageDestroy(img);
 	paletteFree(pal);
 	return 0;
@@ -80,7 +97,9 @@ void initField(){
 		for(int j = 0; j < HS; j++){
 			int sx = i * GRID_SIZE,
 				sy = j * GRID_SIZE;
-			Vec2 v = VEC_CREATE(cos((sx - sy * 2) * 0.0009f), sin((sy + sx) * 0.0021f));
+			//Vec2 v = VEC_CREATE(cos((sx - sy * 2) * 0.0009f), sin((sy + sx) * 0.0021f));
+			double zoom = 1.8f;
+			Vec2 v = VEC_CREATE(sin((i+j) * 0.019 * zoom) * 0.5f, (cos(j * 0.028f * zoom)));
 			setVec(VEC_CREATE(sx, sy), v, 1);
 		}
 	}
@@ -122,4 +141,15 @@ void loadCurves(){
 			}
 		}
 	}
+}
+
+void printProgress(int curr, int total){
+	double precentage = (double)curr/total;
+	int numFull = precentage * NUM_PROGRESS_BARS;
+	printf("%s", GO_TO_LINE_START);
+	for(int i = 0; i < NUM_PROGRESS_BARS; i++){
+		putc(i <= numFull ? (i == numFull ? ARROW : FULL)  : EMPTY, stdout);
+	}
+	printf("|%3d%%", (int)(precentage * 100));
+	fflush(stdout);
 }
