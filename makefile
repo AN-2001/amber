@@ -1,5 +1,5 @@
 cc := gcc
-flags := -Wall -Werror -pedantic-errors -g
+flags := -Wall -Werror -pedantic-errors
 libs := -lgd -lm
 obj := colour.o vec.o
 
