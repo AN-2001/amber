@@ -3,6 +3,7 @@
 #define WIDTH 1920
 #define HEIGHT 1080
 #define GRID_SIZE 5
+#define ATOM_SIZE 5
 #define WS ((WIDTH) / (GRID_SIZE))
 #define HS ((HEIGHT) / (GRID_SIZE))
 #define ITERS 2000

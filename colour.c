@@ -1,8 +1,8 @@
 #include "colour.h"
 #include <gd.h>
 #include "config.h"
-#define DRAW_CIRCLE_AT(img, x, y) (gdImageFilledEllipse(img, x, y, GRID_SIZE, GRID_SIZE, currentColor)) 
-#define DRAW_RECT_AT(img, x, y) (gdImageFilledRectangle(img, x, y, x + GRID_SIZE, y + GRID_SIZE, currentColor)) 
+#define DRAW_CIRCLE_AT(img, x, y) (gdImageFilledEllipse(img, x, y, ATOM_SIZE, ATOM_SIZE, currentColor)) 
+#define DRAW_RECT_AT(img, x, y) (gdImageFilledRectangle(img, x, y, x + ATOM_SIZE, y + ATOM_SIZE, currentColor)) 
 #define BUFFER_SIZE 512
 #define MAX_P_COUNT 64	
 struct palette_t{
