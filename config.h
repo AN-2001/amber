@@ -2,15 +2,15 @@
 #define CONFIG_H
 #define WIDTH 1920
 #define HEIGHT 1080
-#define GRID_SIZE 4
+#define GRID_SIZE 5
 #define WS ((WIDTH) / (GRID_SIZE))
 #define HS ((HEIGHT) / (GRID_SIZE))
-#define ITERS 500
-#define ATOM_COUNT 8000
+#define ITERS 2000
+#define ATOM_COUNT 25000
 
 // basic options
-#define SHOW_ALL_ITERS
-#define CIRCLE_ATOMS
+//#define SHOW_ALL_ITERS
+//#define CIRCLE_ATOMS
 
 
 // CURVE STUFF //

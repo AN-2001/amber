@@ -98,8 +98,8 @@ void initField(){
 			int sx = i * GRID_SIZE,
 				sy = j * GRID_SIZE;
 			//Vec2 v = VEC_CREATE(cos((sx - sy * 2) * 0.0009f), sin((sy + sx) * 0.0021f));
-			double zoom = 1.8f;
-			Vec2 v = VEC_CREATE(sin((i+j) * 0.019 * zoom) * 0.5f, (cos(j * 0.028f * zoom)));
+			double zoom = 1.0f;
+			Vec2 v = VEC_CREATE(sin((i+j) * 0.019 * zoom), (cos((i-j) * 0.028f * zoom)));
 			setVec(VEC_CREATE(sx, sy), v, 1);
 		}
 	}
