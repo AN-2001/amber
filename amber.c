@@ -7,7 +7,7 @@
 #include "vec.h"
 #include "colour.h"
 #include "config.h"
-#define GO_TO_LINE_START "[0`"
+#include "boilerplate.h"
 // TODO: get rid of globals you idiot.......
 typedef Vec2 (*Curve)(double t);
 Vec2 field[WS * HS];
@@ -16,17 +16,21 @@ void performIter();
 void initField();
 void initAtoms(int p);
 void setVec(Vec2 v, Vec2 u, int norm);
-void printProgress(int curr, int total);
 
+
+#define NUM_ARGS 2
+const char * help[NUM_ARGS][2] = {{"-o", "set the output file"},
+						          {"-p", "set the palette"}};
+// the index inside argv[]
+int pathi = -1, palettei = -1;
+void parseArgs(int argc, const char *argv[]);
+void printHelp();
 
 int main(int argc, const char *argv[]){
-	if(argc > 3){
-		fprintf(stderr, "usage %s <palette> <out>\n", argv[0]);	
-		return 1;
-	}
+	parseArgs(argc, argv);
+	const char *path = (pathi != -1 ? argv[pathi] : "out");	
+	const char *palettePath = (palettei != -1 ? argv[palettei] : "default.csv");	
 
-	const char *path = argc >= 3 ? argv[2] : "./out";
-	const char *palettePath = argc >= 2 ? argv[1] : "default.csv";
 	Palette pal = paletteLoad(palettePath);	
 	if(!pal)
 		return 1;
@@ -43,20 +47,14 @@ int main(int argc, const char *argv[]){
 		performIter();
 		atomsDraw(atoms, ATOM_COUNT, img);
 #ifdef SHOW_ALL_ITERS
-		char out[64] = {0};
-		sprintf(out, "%s%d.png", path, i);
-		gdImageFile(img, out);
+		outputImage(img, path, i, ITERS);
+#else
+		printProgress(i, ITERS);
 #endif
-		if(i % PRINT_PERIOD == 0)
-			printProgress(i, ITERS);
 	}
-
 	printProgress(ITERS, ITERS);
-
 #ifndef SHOW_ALL_ITERS
-	char out[64] = {0};
-	sprintf(out, "%s.png", path);
-	gdImageFile(img, out);
+	outputImage(img, path, 1, 1);
 #endif
 
 	gdImageDestroy(img);
@@ -98,7 +96,7 @@ void initField(){
 			int sx = i * GRID_SIZE,
 				sy = j * GRID_SIZE;
 			//Vec2 v = VEC_CREATE(cos((sx - sy * 2) * 0.0009f), sin((sy + sx) * 0.0021f));
-			double zoom = 1.0f;
+			double zoom = 0.4f;
 			Vec2 v = VEC_CREATE(sin((i+j) * 0.019 * zoom), (cos((i-j) * 0.028f * zoom)));
 			setVec(VEC_CREATE(sx, sy), v, 1);
 		}
@@ -143,13 +141,33 @@ void loadCurves(){
 	}
 }
 
-void printProgress(int curr, int total){
-	double precentage = (double)curr/total;
-	int numFull = precentage * NUM_PROGRESS_BARS;
-	printf("%s", GO_TO_LINE_START);
-	for(int i = 0; i < NUM_PROGRESS_BARS; i++){
-		putc(i <= numFull ? (i == numFull ? ARROW : FULL)  : EMPTY, stdout);
+
+void parseArgs(int argc, const char *argv[]){
+	for(int i = 0; i < argc; i++){
+		if(argv[i][0] == '-'){
+			switch(argv[i][1]){
+				case 'p':
+				case 'P':
+					palettei = i + 1;
+					break;
+				case 'o':
+				case 'O':
+					pathi = i + 1;
+					break;
+				case 'h':
+				case 'H':
+					printHelp();
+					exit(0);
+					break;
+			}
+		}
 	}
-	printf("|%3d%%", (int)(precentage * 100));
-	fflush(stdout);
+}
+
+
+void printHelp(){
+	printf("skeleton: put simple description here\n");
+	for(int i = 0; i < NUM_ARGS; i++){
+		printf("%s : %s\n", help[i][0], help[i][1]);		
+	}
 }

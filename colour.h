@@ -2,6 +2,7 @@
 #define COLOUR_H
 #include "vec.h"
 #include <gd.h>
+// TODO: remove all things unrelated to colour
 typedef int Color;
 typedef unsigned Cindex;
 typedef struct{
