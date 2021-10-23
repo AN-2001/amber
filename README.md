@@ -7,12 +7,12 @@ A program for generating "painting" like art
 - libgd for outputting images
 
 ## Example Outputs
-![png!](https://github.com/AN-2001/amber/blob/master/docs/p1.png)
+![png!](docs/p1.png)
 
-![png!](https://github.com/AN-2001/amber/blob/master/docs/p3.png)
+![png!](docs/p3.png)
 
-![png!](https://github.com/AN-2001/amber/blob/master/docs/p2.png)
+![png!](docs/p2.png)
 
-![png!](https://github.com/AN-2001/amber/blob/master/docs/p4.png)
+![png!](docs/p4.png)
 
 
