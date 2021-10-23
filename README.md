@@ -1,7 +1,7 @@
 # AMBER
 A program for generating "painting" like art
 
-![gif!](https://github.com/AN-2001/amber/blob/master/docs/out.gif)
+![gif!](docs/out.gif)
 
 ## Deps
 - libgd for outputting images
