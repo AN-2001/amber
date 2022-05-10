@@ -1,18 +1,19 @@
 # AMBER
 A program for generating "painting" like art
 
-![gif!](docs/out.gif)
+> ![gif!](docs/out.gif)
 
 ## Deps
 - libgd for outputting images
 
 ## Example Outputs
-![png!](docs/p1.png)
+> ![png!](docs/p1.png)
 
-![png!](docs/p3.png)
+> ![png!](docs/p3.png)
 
-![png!](docs/p2.png)
+> ![png!](docs/p2.png)
 
-![png!](docs/p4.png)
+> ![png!](docs/p4.png)
 
+### This repo is supported by my gemstone project
 
